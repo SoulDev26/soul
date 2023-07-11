@@ -1,5 +1,5 @@
-#ifndef PHYSICA_DEBUG_HPP
-#define PHYSICA_DEBUG_HPP
+#ifndef SOUL_DEBUG_HPP
+#define SOUL_DEBUG_HPP
 
 
 #include <string>
@@ -11,37 +11,37 @@
 #include <fmt/format.h>
 #include <fmt/color.h>
 
-#define PHYSICA_DEBUG_FMT_STR "({})[{}](Physica::{}::{}): {}\n"
+#define DEBUG_ERROR(...) raiseError(this, __FUNCTION__, fmt::format(__VA_ARGS__))
+#define SOUL_PANIC(...) fmt::print(stderr, "{} {}[line {}]: ", fmt::styled("PANIC", fmt::fg(fmt::color::red)), __FILE__, __LINE__); \
+    fmt::print(stderr, __VA_ARGS__); fmt::print(stderr, '\n'); \
+    exit(1)
 
-#define PHYSICA_ERROR(msg) raiseError(this, __FUNCTION__, msg)
-
-#ifdef PHYSICA_DEBUG
-
-#define PHYSICA_INFO(msg) debugPrint(phys::DebugMsgType::Info, this, __FUNCTION__, msg)
-#define PHYSICA_WARNING(msg) debugPrint(phys::DebugMsgType::Warning, this, __FUNCTION__, msg)
-
+#ifdef DEBUG
+    #define DEBUG_INFO(...) debugPrint(soul::DebugMsgType::Info, this, __FUNCTION__, fmt::format(__VA_ARGS__))
+    #define DEBUG_WARNING(...) debugPrint(soul::DebugMsgType::Warning, this, __FUNCTION__, fmt::format(__VA_ARGS__))
 #else
-
-#define PHYSICA_INFO(msg)
-#define PHYSICA_WARNING(msg)
-
+    #define DEBUG_INFO(...)
+    #define DEBUG_WARNING(...)
 #endif
 
 
-namespace phys {
+namespace soul {
     enum DebugMsgType
     {
         Error,
         Info,
         Warning
     };
-
     class Debug {
     private:
         std::string className_;
+        std::string namespace_;
     
     public:
-        Debug(std::string className) : className_(className)
+        Debug(std::string className) : className_(className), namespace_()
+        {}
+
+        Debug(std::string className, std::string namespaceStr) : className_(className), namespace_(namespaceStr)
         {}
 
         void debugPrint(DebugMsgType msgType, const void *thisPtr, std::string funcName, std::string msg) const
@@ -66,7 +66,7 @@ namespace phys {
             fmt::print("({}) [{}]({}::{}::{}): {}\n",
                     msgTypeStr,
                     fmt::ptr(thisPtr),
-                    fmt::styled("Physica", fmt::fg(fmt::color::lime)),
+                    fmt::styled(namespace_, fmt::fg(fmt::color::lime)),
                     fmt::styled(className_, fmt::fg(fmt::color::blue_violet)),
                     fmt::styled(funcName, fmt::fg(fmt::color::orange)),
                     msg
@@ -82,4 +82,4 @@ namespace phys {
 }
 
 
-#endif // PHYSICA_DEBUG_HPP
+#endif // SOUL_DEBUG_HPP

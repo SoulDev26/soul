@@ -1,5 +1,5 @@
-#ifndef STYPES_H
-#define STYPES_H
+#ifndef SOUL_STYPES_H
+#define SOUL_STYPES_H
 
 #include <stdint.h>
 
@@ -17,4 +17,4 @@ typedef uint64_t u64;
 typedef u8 byte;
 
 
-#endif
+#endif // SOUL_STYPES_H

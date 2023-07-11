@@ -5,35 +5,39 @@
 #include <unistd.h>
 #include <sys/mman.h>
 #include <cstdio>
+#include <cstring>
+#include <functional>
 
 
 namespace soul
 {
-    void* valloc(size_t size)
-    {
-    #ifdef __linux__
-        return mmap(nullptr, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
-    #elifdef _WIN32
-        fprintf(stderr, "valloc: virtual allocation for Windows is not yet implemented\n");
-        exit(1);
-    #endif
-    }
+    /*
+     * Allocates virtual memory with some size
+     */
+    void* valloc(size_t size);
 
-    void* vrealloc(void* ptr, size_t newSize)
-    {
-    #ifdef __linux__
-        return mmap(ptr, newSize, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
-    #elifdef _WIN32
-        fprintf(stderr, "vrealloc: virtual reallocation for Windows is not yet implemented\n");
-        exit(1);
-    #endif
-    }
+    /*
+     * Reallocates virtual memory with new size
+     * (ptr can be nullptr)
+     *
+     * oldSize is needed if you need to copy data during reallocation
+     */
+    void* vrealloc(void* ptr, size_t oldSize, size_t newSize);
 
-    size_t getPageSize()
+    /*
+     * Reallocates virtual memory with new size.
+     * (ptr can be nullptr)
+     *
+     * oldSize is needed if you need to copy data during reallocation.
+     */
+    //void* vrealloc(void* ptr, size_t oldSize, size_t newSize, std::function<void(void*, void*)> copyFunc);
+
+
+    inline size_t getPageSize()
     {
-    #ifdef __linux__
+    #if defined(__linux__)
         return sysconf(_SC_PAGESIZE);
-    #elifdef _WIN32
+    #elif defined(_WIN32);
     #endif
     }
 }
