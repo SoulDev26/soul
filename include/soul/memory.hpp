@@ -33,7 +33,7 @@ namespace soul
     //void* vrealloc(void* ptr, size_t oldSize, size_t newSize, std::function<void(void*, void*)> copyFunc);
 
 
-    inline size_t getPageSize()
+    inline size_t get_page_size()
     {
     #if defined(__linux__)
         return sysconf(_SC_PAGESIZE);

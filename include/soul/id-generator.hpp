@@ -2,12 +2,12 @@
 #define SOUL_ID_GENERATOR_HPP
 
 #include "stypes.hpp"
-#include "valloc.hpp"
+#include "memory.hpp"
 
 
 namespace soul 
 {
-    static u64 genUniqId()
+    static u64 gen_uniq_id()
     {
         static size_t pageSize = getPageSize();
         static byte* page = nullptr;
