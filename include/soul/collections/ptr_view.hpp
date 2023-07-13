@@ -11,7 +11,7 @@ namespace soul
     class ptr_view
     {
     private:
-        T* begin_;
+        byte* begin_;
         byte* end_;
 
     public:
@@ -45,6 +45,11 @@ namespace soul
         byte& end() const
         {
             return *end_;
+        }
+
+        size_t size() const
+        {
+            return end_ - begin_ + 1;
         }
 
         
