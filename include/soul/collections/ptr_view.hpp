@@ -33,18 +33,32 @@ namespace soul
 
         ptr_view(T& val)
         {
-            begin_ = val;
+            begin_ = (byte*)&val;
             end_ = (byte*)(&val + 1) - 1;
         }
 
-        T& begin() const 
+        T* operator&()
+        { return (T*)begin_; }
+
+        void operator=(const T& ptr)
         {
-            return *begin_;
+            begin_ = (byte*)&ptr;
+        }
+        
+        void operator=(const T* ptr)
+        {
+            begin_ = (byte*)ptr;
         }
 
-        byte& end() const
+
+        T* begin() const 
         {
-            return *end_;
+            return (T*)begin_;
+        }
+
+        byte* end() const
+        {
+            return end_;
         }
 
         size_t size() const

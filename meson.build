@@ -7,4 +7,8 @@ libsoul_src = [
   'src/memory.cpp'
 ]
 
+libfmt_dep = dependency('fmt')
+
 static_library('soul', libsoul_src)
+executable('tests', 'tests.cpp',
+  dependencies : [libfmt_dep])
