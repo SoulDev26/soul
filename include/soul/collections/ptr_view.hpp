@@ -75,7 +75,6 @@ namespace soul
             if (val == nullptr) SOUL_PANIC("ptr_view: val is nullptr");
 
             begin_ = val;
-            end_ = (byte*)(val + 1) - 1;
         }
 
         void set(T* val, size_t size)
