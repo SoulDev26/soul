@@ -4,7 +4,7 @@ project('soul', 'cpp',
 
 
 libsoul_src = [
-  'src/valloc.cpp'
+  'src/memory.cpp'
 ]
 
 static_library('soul', libsoul_src)

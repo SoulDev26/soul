@@ -9,7 +9,7 @@ namespace soul
 {
     static u64 gen_uniq_id()
     {
-        static size_t pageSize = getPageSize();
+        static size_t pageSize = get_page_size();
         static byte* page = nullptr;
         static byte* usedPtr = nullptr;
 

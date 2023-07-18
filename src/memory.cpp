@@ -1,5 +1,4 @@
-#include "../include/soul/valloc.hpp"
-
+#include "../include/soul/memory.hpp"
 
 
 void* soul::valloc(size_t size)
