@@ -40,6 +40,9 @@ namespace soul
         T* operator&()
         { return (T*)begin_; }
 
+        T operator*()
+        { return *(T*)begin_; }
+
         void operator=(const T& ptr)
         {
             begin_ = (byte*)&ptr;
